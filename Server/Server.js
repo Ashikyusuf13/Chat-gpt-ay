@@ -38,8 +38,10 @@ app.get("/", (req, res) => {
   res.send("Server is running sucessfully");
 });
 
-//listen
+export default app;
+
+/* //listen
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log("server is running on port:" + PORT);
-});
+}); */
