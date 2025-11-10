@@ -14,6 +14,8 @@ const app = express();
 //mongodb server
 await connectDb();
 
+app.use(cors());
+
 //stripe webhook
 app.post(
   "/api/webhook",
@@ -22,7 +24,7 @@ app.post(
 );
 
 //middleware
-app.use(cors());
+
 app.use(express.json());
 
 //routes
