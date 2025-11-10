@@ -14,8 +14,6 @@ const app = express();
 //mongodb server
 await connectDb();
 
-app.use(cors());
-
 //stripe webhook
 app.post(
   "/api/webhook",
@@ -24,7 +22,7 @@ app.post(
 );
 
 //middleware
-
+app.use(cors());
 app.use(express.json());
 
 //routes
@@ -38,10 +36,8 @@ app.get("/", (req, res) => {
   res.send("Server is running sucessfully");
 });
 
-export default app;
-
-/* //listen
+//listen
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log("server is running on port:" + PORT);
-}); */
+});
