@@ -1,4 +1,4 @@
-import express from "express";
+/* import express from "express";
 import cors from "cors";
 import "dotenv/config";
 import connectDb from "./Config/Db.js";
@@ -41,3 +41,47 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log("server is running on port:" + PORT);
 });
+ */
+
+import express from "express";
+import cors from "cors";
+import "dotenv/config";
+import connectDb from "./Config/Db.js";
+import AuthRouter from "./Routes/AuthRouter.js";
+import chatrouter from "./Routes/Chatrouter.js";
+import messagerouter from "./Routes/MessageRoute.js";
+import creditrouter from "./Routes/Creditsrouts.js";
+import { stripewebhooks } from "./Controller/Webhooks.js";
+
+// initial express
+const app = express();
+
+// Connect to DB once when the lambda cold-starts
+// (Ensure connectDb handles connection caching in repeated invocations)
+await connectDb();
+
+// stripe webhook (raw body)
+app.post(
+  "/api/webhook",
+  express.raw({ type: "application/json" }),
+  stripewebhooks
+);
+
+// middleware
+app.use(cors());
+app.use(express.json());
+
+// routes
+app.use("/api/auth", AuthRouter);
+app.use("/api/chat", chatrouter);
+app.use("/api/message", messagerouter);
+app.use("/api/credit", creditrouter);
+
+// homepage route
+app.get("/", (req, res) => {
+  res.send("Server is running successfully");
+});
+
+// NOTE: DO NOT call app.listen() on Vercel (serverless). Instead export the app
+// so the builder can use it as a serverless function.
+export default app;
