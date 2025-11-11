@@ -1,12 +1,12 @@
 import express from "express";
 import cors from "cors";
 import "dotenv/config";
-import connectDb from "./Config/Db.js";
 import AuthRouter from "./Routes/AuthRouter.js";
 import chatrouter from "./Routes/Chatrouter.js";
 import messagerouter from "./Routes/MessageRoute.js";
 import creditrouter from "./Routes/Creditsrouts.js";
 import { stripewebhooks } from "./Controller/Webhooks.js";
+import connectDb from "./Config/Db.js";
 
 //initial express
 const app = express();
