@@ -4,7 +4,7 @@ import User from "../Models/User.js";
 
 export const stripewebhooks = async (request, response) => {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-  const sig = req.headers["stripe-signature"];
+  const sig = request.headers["stripe-signature"];
 
   let event;
 
@@ -44,7 +44,7 @@ export const stripewebhooks = async (request, response) => {
           await transaction.save();
         } else {
           return response.json({
-            reeived: true,
+            received: true,
             message: "Ignore event : Inalid app",
           });
         }

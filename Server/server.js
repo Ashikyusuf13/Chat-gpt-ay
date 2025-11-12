@@ -16,7 +16,7 @@ await connectDb();
 
 //stripe webhook
 app.post(
-  "/api/webhook",
+  "/api/stripe",
   express.raw({ type: "application/json" }),
   stripewebhooks
 );
