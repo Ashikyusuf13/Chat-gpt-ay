@@ -21,8 +21,11 @@ app.post(
   stripewebhooks
 );
 
+//cors
+const allowpages = ["http://localhost:5173"];
+
 //middleware
-app.use(cors());
+app.use(cors({ origin: allowpages, credentials: true }));
 app.use(express.json());
 
 //routes
