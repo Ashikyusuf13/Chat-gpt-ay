@@ -37,7 +37,6 @@ export const AppcontextProvider = (props) => {
   //create new chats
   const createnewchat = async () => {
     try {
-      if (!user) return toast.error("Please login to create a new chat");
       navigate("/");
 
       const { data } = await axios.get("/api/chat/create");
