@@ -133,7 +133,7 @@ const Chat = () => {
         <select
           onChange={(e) => setMode(e.target.value)}
           value={mode}
-          className="appearance-none pr-4 pl-3 py-2 rounded-full bg-gray-100 dark:bg-gray-700 text-sm text-gray-800 dark:text-gray-100 outline-none "
+          className="appearance-none pr-4 pl-3 py-2 rounded-full bg-gray-400 dark:bg-gray-700 text-sm text-gray-900 dark:text-gray-100 outline-none "
         >
           <option
             className="bg-transparent hover:dark:bg-purple-400"
