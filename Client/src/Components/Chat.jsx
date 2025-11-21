@@ -18,10 +18,6 @@ const Chat = () => {
   const onsubmit = async (e) => {
     try {
       e.preventDefault();
-      if (!user) return toast.error("Please login to send a message");
-      if (!selectedchat?._id)
-        return toast.error("Select or create a chat first");
-
       setLoading(true);
       const promptcopy = prompt;
       // clear input immediately
