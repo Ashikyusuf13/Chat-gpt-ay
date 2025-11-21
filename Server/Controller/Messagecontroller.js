@@ -10,7 +10,7 @@ export const textMessageController = async (req, res) => {
     const userId = req.user._id;
     const { chatId, prompt } = req.body;
     if (req.user.credits < 1) {
-      res.json({
+      return res.json({
         success: false,
         message: "you don't have the enough token to use this feature",
       });
@@ -22,6 +22,7 @@ export const textMessageController = async (req, res) => {
       content: prompt,
       timestamp: Date.now(),
       isImage: false,
+      ispublished: false,
     });
 
     const { choices } = await openAI.chat.completions.create({
@@ -37,6 +38,7 @@ export const textMessageController = async (req, res) => {
       ...choices[0].message,
       timestamp: Date.now(),
       isImage: false,
+      ispublished: false,
     };
 
     chat.messages.push(reply);
@@ -71,6 +73,7 @@ export const imagemessagecontroller = async (req, res) => {
       content: prompt,
       timestamp: Date.now(),
       isImage: false,
+      ispublished: false,
     });
 
     //Encode the prompt
@@ -106,14 +109,16 @@ export const imagemessagecontroller = async (req, res) => {
       content: uploadRespond.url,
       timestamp: Date.now(),
       isImage: true,
-      ispublished,
+      ispublished: ispublished === true || ispublished === "true",
     };
 
-    res.json({ success: true, reply });
-
+    // save message and update credits BEFORE sending response
     chat.messages.push(reply);
     await chat.save();
     await User.updateOne({ _id: userId }, { $inc: { credits: -2 } });
+
+    // send response after successful DB save
+    res.json({ success: true, reply });
   } catch (error) {
     res.json({ success: false, message: error.message });
   }

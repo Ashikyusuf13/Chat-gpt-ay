@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import Sidebar from "./Components/Sidebar";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Login from "./Pages/Login";
 import Credits from "./Pages/Credits";
 import Community from "./Pages/Community";
@@ -9,14 +9,21 @@ import { assets } from "./assets/assets";
 import Loading from "./Pages/Loading";
 import "./assets/prism.css";
 import { AppContext } from "./Context/Appcontext";
+import { Toaster } from "react-hot-toast";
 
 const App = () => {
-  const { user } = useContext(AppContext);
+  const { user, loadinguser } = useContext(AppContext);
 
   const [openMenu, setOpenMenu] = useState(false);
+  const { pathname } = useLocation();
+
+  if (pathname === "/loading" || loadinguser) {
+    return <Loading />;
+  }
 
   return (
     <>
+      <Toaster />
       {!openMenu && (
         <img
           src={assets.menu_icon}
@@ -37,7 +44,6 @@ const App = () => {
               <Route path="/login" element={<Login />} />
               <Route path="/credits" element={<Credits />} />
               <Route path="/community" element={<Community />} />
-              <Route path="/loading" element={<Loading />} />
             </Routes>
           </div>
         </div>

@@ -1,14 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { dummyPublishedImages } from "../assets/assets";
 import Loading from "./Loading";
+import { AppContext } from "../Context/Appcontext";
+import toast from "react-hot-toast";
 
 const Community = () => {
   const [content, setContent] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { axios } = useContext(AppContext);
 
   const fetchContent = async () => {
-    setContent(dummyPublishedImages);
-    setLoading(false);
+    try {
+      /* const { data } = await axios.get("/api/auth/published-images");
+      if (data.success) {
+        setContent(data.images);
+      } else {
+        toast.error(data.message);
+      } */
+      setContent(dummyPublishedImages);
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -46,8 +60,11 @@ const Community = () => {
           ))}
         </div>
       ) : (
-        <div className="py-12 text-center text-gray-600 dark:text-gray-400">
-          No community images yet.
+        <div className=" flex items-center justify-center px-5">
+          <p className="font-medium text-3xl dark:text-white mt-12">
+            {" "}
+            No community images yet.
+          </p>
         </div>
       )}
     </div>

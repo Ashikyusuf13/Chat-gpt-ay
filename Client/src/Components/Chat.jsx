@@ -2,18 +2,67 @@ import React, { use, useContext, useEffect, useRef, useState } from "react";
 import { AppContext } from "../Context/Appcontext";
 import { assets } from "../assets/assets";
 import Messages from "./Messages";
+import toast from "react-hot-toast";
 
 const Chat = () => {
   const containerRef = useRef(null);
-  const { selectedchat, theme } = useContext(AppContext);
+  const { selectedchat, theme, user, axios, setUser } = useContext(AppContext);
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [promt, setPrompt] = useState("");
-  const [mode, setMode] = useState("Text");
+  // standardize to `prompt`
+  const [prompt, setPrompt] = useState("");
+  // normalize mode values to lowercase to match server routes: 'text' | 'image'
+  const [mode, setMode] = useState("text");
   const [ispublished, setIspublished] = useState(false);
 
   const onsubmit = async (e) => {
-    e.preventDefault();
+    try {
+      e.preventDefault();
+      if (!user) return toast.error("Please login to send a message");
+      if (!selectedchat?._id)
+        return toast.error("Select or create a chat first");
+
+      setLoading(true);
+      const promptcopy = prompt;
+      // clear input immediately
+      setPrompt("");
+      // optimistic add
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "user",
+          content: promptcopy,
+          timestamp: Date.now(),
+          isimage: false,
+        },
+      ]);
+
+      const { data } = await axios.post(
+        `/api/message/${mode}`,
+        { chatId: selectedchat._id, prompt: promptcopy, ispublished },
+        { withCredentials: true }
+      );
+      if (data.success) {
+        setMessages((prev) => [...prev, data.reply]);
+
+        // decrease user credits (guard in case setUser isn't provided)
+        if (typeof setUser === "function") {
+          if (mode === "image") {
+            setUser((prev) => ({ ...prev, credits: (prev?.credits || 0) - 2 }));
+          } else {
+            setUser((prev) => ({ ...prev, credits: (prev?.credits || 0) - 1 }));
+          }
+        }
+      } else {
+        toast.error(data.message);
+        setPrompt(promptcopy);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setPrompt("");
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -63,7 +112,7 @@ const Chat = () => {
 
       {/*  publish community */}
 
-      {mode === "Image" && (
+      {mode === "image" && (
         <div className="flex items-center mx-auto justify-center  p-1 gap-2">
           <input
             className="cursor-pointer"
@@ -92,11 +141,11 @@ const Chat = () => {
           >
             Text
           </option>
-          <option value="Image">Image</option>
+          <option value="image">Image</option>
         </select>
         <input
           onChange={(e) => setPrompt(e.target.value)}
-          value={promt}
+          value={prompt}
           type="text"
           placeholder="Type your prompt here..."
           required

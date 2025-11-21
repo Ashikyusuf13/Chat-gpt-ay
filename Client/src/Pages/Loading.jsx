@@ -1,7 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
+import { AppContext } from "../Context/Appcontext";
 
 export default function Loading() {
+  const { fetchUserChats } = useContext(AppContext);
   useEffect(() => {
+    fetchUserChats();
     const t = setTimeout(() => {
       // redirect to home after 3 seconds
       window.location.href = "/";
