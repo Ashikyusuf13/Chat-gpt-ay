@@ -77,10 +77,10 @@ export const AppcontextProvider = (props) => {
           setSelectedchat(data.chats[0]);
         }
       } else {
-        toast.error(data.message);
+        console.log(data.message);
       }
     } catch (error) {
-      toast.error(error.message);
+      console.log(error.message);
     }
   };
 
