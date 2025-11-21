@@ -22,7 +22,7 @@ app.post(
 );
 
 //cors
-const allowpages = ["http://localhost:5173"];
+const allowpages = ["http://localhost:5173", "https://ashik-gpt.vercel.app"];
 
 //middleware
 app.use(cors({ origin: allowpages, credentials: true }));
