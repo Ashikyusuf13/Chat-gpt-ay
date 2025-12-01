@@ -8,7 +8,7 @@ export default function Loading() {
     const t = setTimeout(() => {
       // redirect to home after 3 seconds
       window.location.href = "/";
-    }, 3000);
+    }, 2000);
     return () => clearTimeout(t);
   }, []);
 

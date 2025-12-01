@@ -18,6 +18,7 @@ const Login = () => {
 
       if (data.success) {
         window.location.reload();
+        toast.success(data.message);
       } else {
         toast.error(data.message);
       }
