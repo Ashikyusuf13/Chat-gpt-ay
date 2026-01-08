@@ -36,7 +36,7 @@ const Chat = () => {
       const { data } = await axios.post(
         `/api/message/${mode}`,
         { chatId: selectedchat._id, prompt: promptcopy, ispublished },
-        { withCredentials: true }
+        { withCredentials: true, timeout: 120000 } // 120 second timeout for rate limiting
       );
       if (data.success) {
         setMessages((prev) => [...prev, data.reply]);
@@ -50,11 +50,16 @@ const Chat = () => {
           }
         }
       } else {
-        toast.error(data.message);
+        toast.error(data.message || "Failed to process request");
         setPrompt(promptcopy);
       }
     } catch (error) {
-      toast.error(error.message);
+      const errorMessage =
+        error.response?.data?.message ||
+        error.message ||
+        "Failed to process request. If you're getting rate limit errors, please wait and try again.";
+      toast.error(errorMessage);
+      setPrompt(promptcopy);
     } finally {
       setPrompt("");
       setLoading(false);

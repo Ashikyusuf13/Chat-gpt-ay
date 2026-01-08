@@ -2,7 +2,7 @@ import openAI from "openai";
 
 const openai = new openAI({
   apiKey: process.env.GEMINI_API_KEY,
-  baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/",
+  baseURL: "https://api.groq.com/openai/v1",
 });
 
 export default openai;
