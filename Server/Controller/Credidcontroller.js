@@ -53,6 +53,29 @@ export const getplans = async (req, res) => {
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
+// Get user's purchased plans
+export const getUserPurchasedPlans = async (req, res) => {
+  try {
+    const userId = req.user._id;
+
+    // Find all successful (paid) transactions for this user
+    const purchasedTransactions = await Transaction.find({
+      userId: userId,
+      ispaid: true,
+    });
+
+    // Get unique plan IDs that the user has purchased
+    const purchasedPlanIds = [...new Set(purchasedTransactions.map(t => t.planId))];
+
+    res.json({
+      success: true,
+      purchasedPlanIds,
+    });
+  } catch (error) {
+    res.json({ success: false, message: error.message });
+  }
+};
+
 //purchase the new plan
 export const purchaseplan = async (req, res) => {
   try {
