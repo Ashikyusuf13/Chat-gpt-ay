@@ -201,7 +201,7 @@ const Sidebar = ({ openMenu, setOpenMenu }) => {
                       loading: "Deleting...",
                     })
                   }
-                  className="p-1.5 rounded-lg opacity-0 group-hover:opacity-100 
+                  className="p-1.5 rounded-lg md:opacity-0 md:group-hover:opacity-100 
                   hover:bg-red-100 dark:hover:bg-red-900/40
                   transition-all duration-200"
                 >
