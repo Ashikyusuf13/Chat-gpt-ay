@@ -80,11 +80,11 @@ const Chat = () => {
   }, [messages]);
 
   return (
-    <div className="h-full w-full flex flex-col justify-between p-1 md:m-10 xl:m-30 max-md:mt-15 2xl:pr-40 overflow-hidden">
+    <div className="h-full w-full flex flex-col justify-between max-md:p-2 md:p-4 md:m-8 lg:m-10 xl:m-12 max-md:mt-2 2xl:pr-40 overflow-hidden">
       {/* messages */}
       <div
         ref={containerRef}
-        className="flex-1 mb-5 overflow-y-auto custom-scrollbar"
+        className="flex-1 mb-3 md:mb-5 overflow-y-auto custom-scrollbar px-2 md:px-0"
       >
         {messages.length === 0 && (
           <div className="flex flex-col items-center justify-center h-full">
@@ -138,8 +138,8 @@ const Chat = () => {
         onSubmit={onsubmit}
         className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm 
           border-2 border-purple-300 dark:border-purple-700 
-          rounded-2xl w-full max-w-3xl p-2 mb-15
-          flex items-center justify-between gap-2
+          rounded-xl md:rounded-2xl w-full max-w-none md:max-w-3xl p-2 md:p-3 mb-2 md:mb-4
+          flex items-center justify-between gap-1 md:gap-2
           shadow-lg shadow-purple-500/10 dark:shadow-purple-500/20
           focus-within:border-purple-500 dark:focus-within:border-purple-500
           transition-all duration-300"
@@ -147,11 +147,11 @@ const Chat = () => {
         <select
           onChange={(e) => setMode(e.target.value)}
           value={mode}
-          className="appearance-none px-4 py-2 rounded-xl 
+          className="appearance-none px-2 md:px-4 py-2 rounded-lg md:rounded-xl 
             bg-purple-100 dark:bg-purple-900/50 
-            text-sm font-medium text-purple-700 dark:text-purple-300 
+            text-xs md:text-sm font-medium text-purple-700 dark:text-purple-300 
             border border-purple-200 dark:border-purple-700
-            outline-none cursor-pointer
+            outline-none cursor-pointer whitespace-nowrap flex-shrink-0
             hover:bg-purple-200 dark:hover:bg-purple-800/50
             transition-colors"
         >
@@ -163,9 +163,9 @@ const Chat = () => {
           onChange={(e) => setPrompt(e.target.value)}
           value={prompt}
           type="text"
-          placeholder="Type your prompt here..."
+          placeholder="Prompt..."
           required
-          className="flex-1 w-full px-4 py-2 text-sm 
+          className="flex-1 min-w-0 px-2 md:px-4 py-2 text-xs md:text-sm 
             bg-transparent
             text-gray-800 dark:text-gray-100
             placeholder-gray-400 dark:placeholder-gray-500
@@ -174,7 +174,7 @@ const Chat = () => {
 
         <button
           disabled={loading}
-          className="p-2.5 rounded-xl 
+          className="p-2 md:p-2.5 rounded-lg md:rounded-xl flex-shrink-0
             bg-gradient-to-r from-purple-600 to-pink-500 
             hover:from-purple-700 hover:to-pink-600
             disabled:opacity-50 disabled:cursor-not-allowed
