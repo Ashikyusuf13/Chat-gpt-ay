@@ -80,7 +80,7 @@ const Chat = () => {
   }, [messages]);
 
   return (
-    <div className="flex-1 flex-col justify-between p-1 flex md:m-10 xl:m-30 max-md:mt-15 2xl:pr-40">
+    <div className="h-full w-full flex flex-col justify-between p-1 md:m-10 xl:m-30 max-md:mt-15 2xl:pr-40 overflow-hidden">
       {/* messages */}
       <div
         ref={containerRef}
@@ -138,7 +138,7 @@ const Chat = () => {
         onSubmit={onsubmit}
         className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm 
           border-2 border-purple-300 dark:border-purple-700 
-          rounded-2xl w-full max-w-3xl p-2 
+          rounded-2xl w-full max-w-3xl p-2 mb-15
           flex items-center justify-between gap-2
           shadow-lg shadow-purple-500/10 dark:shadow-purple-500/20
           focus-within:border-purple-500 dark:focus-within:border-purple-500
