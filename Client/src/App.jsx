@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import Sidebar from "./Components/Sidebar";
 import { Route, Routes, useLocation } from "react-router-dom";
 import Login from "./Pages/Login";
@@ -16,6 +16,11 @@ const App = () => {
 
   const [openMenu, setOpenMenu] = useState(false);
   const { pathname } = useLocation();
+
+  // Close menu when route changes
+  useEffect(() => {
+    setOpenMenu(false);
+  }, [pathname]);
 
   if (pathname === "/loading" || loadinguser) {
     return <Loading />;
@@ -36,15 +41,17 @@ const App = () => {
       )}
 
       {user ? (
-        <div className="dark:bg-gradient-to-b from-[#242124] to-[#000000] dark:text-white">
-          <div className="flex w-screen h-screen">
+        <div className="dark:bg-gradient-to-b from-[#242124] to-[#000000] dark:text-white h-screen w-screen overflow-hidden">
+          <div className="flex w-full h-full">
             <Sidebar openMenu={openMenu} setOpenMenu={setOpenMenu} />
-            <Routes>
-              <Route path="/" element={<Chat />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/credits" element={<Credits />} />
-              <Route path="/community" element={<Community />} />
-            </Routes>
+            <div className="flex-1 overflow-hidden">
+              <Routes>
+                <Route path="/" element={<Chat />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/credits" element={<Credits />} />
+                <Route path="/community" element={<Community />} />
+              </Routes>
+            </div>
           </div>
         </div>
       ) : (

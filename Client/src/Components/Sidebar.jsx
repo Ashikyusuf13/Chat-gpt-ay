@@ -31,13 +31,13 @@ const Sidebar = ({ openMenu, setOpenMenu }) => {
     try {
       e.stopPropagation();
       const confirm = window.confirm(
-        "Are you sure you want to delete this chat?"
+        "Are you sure you want to delete this chat?",
       );
       if (!confirm) return;
       const { data } = await axios.post(
         "/api/chat/delete",
         { chatId },
-        { withCredentials: true }
+        { withCredentials: true },
       );
       if (data.success) {
         setChats((prev) => prev.filter((c) => c._id !== chatId));
@@ -64,8 +64,9 @@ const Sidebar = ({ openMenu, setOpenMenu }) => {
         dark:from-gray-950 dark:via-purple-950/30 dark:to-gray-900
         border-r border-purple-200/50 dark:border-purple-800/30
         backdrop-blur-xl shadow-xl shadow-purple-500/5
-        max-md:absolute left-0 z-10 transition-all duration-500 ease-out ${!openMenu && "max-md:-translate-x-full"
-          }`}
+        max-md:absolute left-0 z-40 transition-all duration-500 ease-out ${
+          !openMenu && "max-md:-translate-x-full"
+        }`}
       >
         {/* Close button for mobile */}
         <button
@@ -105,7 +106,9 @@ const Sidebar = ({ openMenu, setOpenMenu }) => {
           transition-all duration-300 ease-out cursor-pointer 
           flex items-center gap-3 justify-center group"
         >
-          <span className="text-xl font-light group-hover:rotate-90 transition-transform duration-300">+</span>
+          <span className="text-xl font-light group-hover:rotate-90 transition-transform duration-300">
+            +
+          </span>
           <span className="text-sm tracking-wide">New Conversation</span>
         </button>
 
@@ -161,9 +164,9 @@ const Sidebar = ({ openMenu, setOpenMenu }) => {
             .filter((chat) =>
               chat.messages[0]
                 ? chat.messages[0]?.content
-                  .toLowerCase()
-                  .includes(search.toLowerCase())
-                : chat.name.toLowerCase().includes(search.toLowerCase())
+                    .toLowerCase()
+                    .includes(search.toLowerCase())
+                : chat.name.toLowerCase().includes(search.toLowerCase()),
             )
             .map((chat) => (
               <div
@@ -232,8 +235,18 @@ const Sidebar = ({ openMenu, setOpenMenu }) => {
               <img className="w-4" src={assets.gallery_icon} alt="" />
             </div>
             <span className="text-sm">Community Gallery</span>
-            <svg className="w-4 h-4 ml-auto opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            <svg
+              className="w-4 h-4 ml-auto opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 5l7 7-7 7"
+              />
             </svg>
           </button>
 
@@ -263,18 +276,32 @@ const Sidebar = ({ openMenu, setOpenMenu }) => {
                 Click to purchase more
               </p>
             </div>
-            <svg className="w-4 h-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            <svg
+              className="w-4 h-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 5l7 7-7 7"
+              />
             </svg>
           </button>
 
           {/* Theme Toggle - Enhanced */}
-          <div className="flex items-center justify-between p-3 
+          <div
+            className="flex items-center justify-between p-3 
             bg-gray-200/60 mt-1 mb-1 dark:bg-gray-800/50 
             border border-purple-200/30 dark:border-purple-800/20
-            rounded-xl shadow-sm">
+            rounded-xl shadow-sm"
+          >
             <div className="flex items-center gap-3">
-              <div className={`p-1.5 rounded-lg transition-colors ${theme === 'dark' ? 'bg-indigo-100 dark:bg-indigo-900/50' : 'bg-amber-100'}`}>
+              <div
+                className={`p-1.5 rounded-lg transition-colors ${theme === "dark" ? "bg-indigo-100 dark:bg-indigo-900/50" : "bg-amber-100"}`}
+              >
                 <img
                   src={assets.theme_icon}
                   alt="theme"
@@ -282,7 +309,7 @@ const Sidebar = ({ openMenu, setOpenMenu }) => {
                 />
               </div>
               <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                {theme === 'dark' ? 'Dark Mode' : 'Light Mode'}
+                {theme === "dark" ? "Dark Mode" : "Light Mode"}
               </span>
             </div>
             <label className="relative inline-flex items-center cursor-pointer">
@@ -296,16 +323,20 @@ const Sidebar = ({ openMenu, setOpenMenu }) => {
                 aria-label="Toggle theme"
               />
               {/* Enhanced track */}
-              <div className="w-11 h-6 bg-gray-200 dark:bg-gray-700 rounded-full 
+              <div
+                className="w-11 h-6 bg-gray-200 dark:bg-gray-700 rounded-full 
                 peer-checked:bg-gradient-to-r peer-checked:from-purple-500 peer-checked:to-indigo-600 
-                transition-all duration-300 shadow-inner"></div>
+                transition-all duration-300 shadow-inner"
+              ></div>
               {/* Enhanced knob */}
-              <div className="absolute left-0.5 top-0.5 w-5 h-5 
+              <div
+                className="absolute left-0.5 top-0.5 w-5 h-5 
                 bg-white rounded-full shadow-md 
                 transform transition-all duration-300 ease-out
                 peer-checked:translate-x-5
-                flex items-center justify-center text-xs">
-                {theme === 'dark' ? '🌙' : '☀️'}
+                flex items-center justify-center text-xs"
+              >
+                {theme === "dark" ? "🌙" : "☀️"}
               </div>
             </label>
           </div>
