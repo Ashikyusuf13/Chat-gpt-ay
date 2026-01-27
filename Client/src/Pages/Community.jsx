@@ -93,10 +93,6 @@ const Community = () => {
     <div className="w-full h-full overflow-y-auto bg-gradient-to-br from-slate-50 via-purple-50/50 to-indigo-50 dark:from-gray-950 dark:via-purple-950/20 dark:to-gray-900">
       {/* Header Section */}
       <div className="pt-16 pb-8 px-4 text-center  overflow-hidden">
-        {/* Decorative blobs */}
-        <div className="absolute -top-20 -right-20 w-60 h-60 bg-purple-300/30 dark:bg-purple-600/20 rounded-full blur-3xl"></div>
-        <div className="absolute -bottom-20 -left-20 w-60 h-60 bg-pink-300/30 dark:bg-pink-600/20 rounded-full blur-3xl"></div>
-
         <div className="relative">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-purple-100 dark:bg-purple-900/50 rounded-full mb-4">
             <span className="w-2 h-2 bg-purple-500 rounded-full animate-pulse"></span>
