@@ -13,7 +13,7 @@ export const AppcontextProvider = (props) => {
   const [user, setUser] = useState(null);
   const [chats, setChats] = useState([]);
   const [selectedchat, setSelectedchat] = useState(null);
-  const [loadinguser, setLoadinguser] = useState(true);
+  const [loadinguser, setLoadinguser] = useState(false);
 
   const navigate = useNavigate();
 
